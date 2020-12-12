@@ -30,6 +30,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
+        System.out.println("onNewToken \nTOKEN GERADO: "+s);
     }
 
     private void enviarNotificacao(String titulo, String corpo){
