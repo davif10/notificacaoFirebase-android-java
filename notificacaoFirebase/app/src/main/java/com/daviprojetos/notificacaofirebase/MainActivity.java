@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.daviprojetos.notificacaofirebase.api.NotificacaoService;
 import com.daviprojetos.notificacaofirebase.model.Notificacao;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
          */
         /*No firebase na hora de enviar a notificação
          selecionar a segmentação por tópico e selecionar o tópico desejado
-         Nesse caso o usuário está se inscrevendo para receber mensagens de comida brasileira
+         Nesse caso o usuário está se inscrevendo para receber mensagens de comida brasileira*/
 
         //Se inscrevendo no tópico de comida brasileira
         FirebaseMessaging.getInstance().subscribeToTopic("brasileira");
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         //Desativando o tópico inscrito
         //FirebaseMessaging.getInstance().unsubscribeFromTopic("brasileira");
 
-         */
+
 
     }
 
@@ -66,7 +67,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enviarNotificacao(View view){
-        String to=""; //Tópico ou Token
+        //String to="/topics/brasileira"; //Tópico ou Token
+        String tokenTeste ="";//Colocar o Token do celular entre as aspas
+        String to = "";//Tópico ou Token
+        to = tokenTeste;
+
         Notificacao notificacao = new Notificacao("Título da notificação!","Corpo notificação");
         //Monta objeto notificação
         NotificacaoDados notificacaoDados = new NotificacaoDados(to,notificacao);
@@ -77,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<NotificacaoDados>() {
             @Override
             public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
+                Toast.makeText(getApplicationContext(), "Erro Codigo: "+response.code(), Toast.LENGTH_LONG).show();
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Codigo: "+response.code(), Toast.LENGTH_LONG).show();
+                }
 
             }
 
